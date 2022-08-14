@@ -2,7 +2,7 @@ package com.adnan.movieservice.service.impl;
 
 import com.adnan.movieservice.dto.ActorGenresDto;
 import com.adnan.movieservice.repository.ActorRepository;
-import com.adnan.movieservice.service.HomeService;
+import com.adnan.movieservice.service.TypeCastService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
@@ -11,7 +11,7 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HomeServiceImpl implements HomeService {
+public class TypeCastServiceImpl implements TypeCastService {
 
     @Autowired
     private ActorRepository actorRepository;
@@ -33,6 +33,8 @@ public class HomeServiceImpl implements HomeService {
         return detectTypecast(actorGenresDtos);
     }
 
+
+
     protected String detectTypecast(List<ActorGenresDto> res){
         Integer maxGenreAmount = res.get(0).getGenreAmount();
         Integer totalMovies = maxGenreAmount;
@@ -50,4 +52,5 @@ public class HomeServiceImpl implements HomeService {
 
         return "not typecasted";
     }
+
 }

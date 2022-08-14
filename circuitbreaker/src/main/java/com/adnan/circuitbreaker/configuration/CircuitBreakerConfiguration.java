@@ -13,4 +13,6 @@ public class CircuitBreakerConfiguration {
     public MovieService getMovieService(){
         return new MovieServiceImpl();
     }
+
+
 }
