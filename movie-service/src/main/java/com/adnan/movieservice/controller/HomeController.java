@@ -5,18 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class HomeController {
 
     @Autowired
     private HomeService homeService;
 
-    // TODO: Implement correct algorithm here
+
     @GetMapping("type-casted")
     public String TypeCastingController(@RequestParam(value="name") String name){
-        homeService.isTypeCasted(name);
-        return name;
+        return homeService.isTypeCasted(name);
     }
 
 }

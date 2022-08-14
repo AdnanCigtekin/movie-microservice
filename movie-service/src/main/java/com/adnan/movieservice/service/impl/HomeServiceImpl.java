@@ -6,7 +6,10 @@ import com.adnan.movieservice.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.Tuple;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HomeServiceImpl implements HomeService {
 
@@ -15,12 +18,19 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public String isTypeCasted(String actorName) {
-        List<ActorGenresDto> res = actorRepository.getActorGenres(actorName);
+        List<Tuple> res = actorRepository.getActorGenres(actorName);
 
         if (CollectionUtils.isEmpty(res)) {
             return "No actor";
         }
-        return detectTypecast(res);
+
+        List<ActorGenresDto> actorGenresDtos = res.stream()
+                .map(e -> new ActorGenresDto(
+                        e.get(0,String.class),
+                        e.get(1, BigInteger.class).intValue()
+                )).collect(Collectors.toList());
+
+        return detectTypecast(actorGenresDtos);
     }
 
     protected String detectTypecast(List<ActorGenresDto> res){
