@@ -3,6 +3,8 @@ package com.adnan.circuitbreaker.controller;
 
 import com.adnan.circuitbreaker.service.MovieService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MovieServiceController {
+
+    Logger logger = LoggerFactory.getLogger(MovieServiceController.class);
     @Autowired
     @Qualifier("movieService")
     private MovieService movieService;
@@ -22,7 +26,7 @@ public class MovieServiceController {
     }
 
     public String typecastFallback(Exception e){
-        //TODO: Write stacktrace and cause to a log file
+        logger.error("Movie microservice is unavailable: \n Cause : \n {}\n Stacktrace: \n {}",e.getCause(),e.getStackTrace());
         return "Service unavailable now. Try again later...";
     }
 }
